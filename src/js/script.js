@@ -1,15 +1,6 @@
 // Очікуємо, поки DOM повністю завантажиться
 document.addEventListener('DOMContentLoaded', () => {
 
-  /**
-   * =============================================
-   * ЛАБОРАТОРНА РОБОТА 5: AJAX (Fetch API)
-   * =============================================
-   */
-
-  /**
-   * Головна асинхронна функція для завантаження та відображення даних
-   */
   async function loadCVData() {
     try {
       // 1. Завантажуємо дані з data.json
@@ -33,10 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /**
-   * Головна функція, що розподіляє дані по рендер-функціях
-   * @param {object} data - Об'єкт даних з data.json
-   */
   function populateCV(data) {
     // Профіль та Контакти
     renderProfile(data.profile);
@@ -53,8 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSimpleList(data.languages, 'language-list');
     renderSimpleList(data.hobbies, 'hobby-list');
   }
-
-  // === Render-функції ===
 
   function renderProfile(profile) {
     document.getElementById('personName').textContent = `${profile.firstName} ${profile.lastName}`;
@@ -121,10 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ).join('');
   }
 
-  /**
-   * Відображення помилки на сторінці
-   * @param {string} message - Текст помилки
-   */
   function displayError(message) {
     const errorContainer = document.getElementById('error-container');
     if (errorContainer) {
@@ -133,16 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-
-  /**
-   * =============================================
-   * ЗАВДАННЯ З ПОПЕРЕДНІХ ЛАБ (залишаємо без змін)
-   * =============================================
-   */
-
-  /**
-   * ЗАВДАННЯ 2 (ЛР4): Перемикач видимості секцій (Акордеон)
-   */
   function setupSectionToggles() {
     const toggleHeaders = document.querySelectorAll('.toggle-header');
 
@@ -159,10 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /**
-   * ЗАВДАННЯ 3 (ЛР4): Динамічна генерація списку навичок
-   * (Тепер ця функція викликається з populateCV)
-   */
   function renderSkills(skills, containerId) {
     const container = document.getElementById(containerId);
 
