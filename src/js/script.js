@@ -148,13 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-
-  // === ЗАПУСК УСІХ ФУНКЦІЙ ===
-
-  // 1. Запускаємо завантаження даних
   loadCVData();
-
-  // 2. Налаштовуємо акордеон (незалежно від даних)
   setupSectionToggles();
 
 });
