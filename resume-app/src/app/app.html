@@ -1,120 +1,170 @@
-<div id="error-container" class="alert alert-danger m-3" style="display: none;"></div>
+@if (errorMessage) {
+  <div class="alert alert-danger m-3">{{ errorMessage }}</div>
+}
 
-<div class="resume container shadow-lg my-5">
-  <div class="row g-0 position-relative">
+@if (cvData) {
+  <div class="resume container shadow-lg my-5">
+    <div class="row g-0 position-relative">
 
-    <div class="vertical-divider position-absolute top-0 bottom-0"></div>
+      <div class="vertical-divider position-absolute top-0 bottom-0"></div>
 
-    <aside class="col-md-5 left-column d-flex flex-column">
-      <div class="left-column-inner d-flex flex-column flex-grow-1">
+      <aside class="col-md-5 left-column d-flex flex-column">
+        <div class="left-column-inner d-flex flex-column flex-grow-1">
 
-        <div class="profile-header">
-          <h1 class="name" id="personName"></h1>
-          <p class="role small text-uppercase" id="personRole"></p>
-        </div>
-
-        <div class="profile-pic-container text-center">
-          <div class="profile-pic">
-            <img src="" alt="profile" class="img-fluid rounded-circle profile-img" id="profilePic">
+          <div class="profile-header">
+            <h1 class="name">{{ cvData.profile.firstName }} {{ cvData.profile.lastName }}</h1>
+            <p class="role small text-uppercase">{{ cvData.profile.role }}</p>
           </div>
-        </div>
 
-        <section class="w-100 contact-section">
-          <div class="section-heading section-heading-left mb-3">
-            <span class="icon-circle"><i class="bi bi-telephone-fill"></i></span> <h5 class="heading-text">CONTACT ME</h5>
-          </div>
-          <p class="mb-1 no-wrap"><i class="bi bi-telephone-fill me-2"></i><span id="contactPhone"></span></p>
-          <p class="mb-1 no-wrap"><i class="bi bi-globe me-2"></i><span id="contactWebsite"></span></p>
-          <p class="mb-2 no-wrap"><i class="bi bi-geo-alt-fill me-2"></i><span id="contactAddress"></span></p>
-          <hr class="section-sep">
-        </section>
-
-        <section class="w-100 education-section">
-          <div class="section-heading section-heading-left mb-3">
-            <span class="icon-circle"><i class="bi bi-mortarboard-fill"></i></span>
-            <h5 class="heading-text">EDUCATION</h5>
-          </div>
-          <div id="education-container"></div>
-          <hr class="section-sep">
-        </section>
-
-        <section class="w-100 references-section">
-          <div class="section-heading section-heading-left mb-3">
-            <span class="icon-circle"><i class="bi bi-people-fill"></i></span>
-            <h5 class="heading-text">REFERENCES</h5>
-          </div>
-          <div id="references-container"></div>
-        </section>
-
-      </div>
-    </aside>
-
-    <main class="col-md-7 right-column bg-white p-5">
-
-      <section class="mb-4">
-        <div class="section-heading section-heading-right toggle-header">
-          <div class="section-heading-left-group">
-            <span class="icon-circle"><i class="bi bi-person-circle"></i></span>
-            <h5 class="heading-text">ABOUT ME</h5>
-          </div>
-          <i class="bi bi-chevron-down toggle-arrow"></i>
-        </div>
-
-        <div class="toggle-content is-hidden">
-          <p class="right-text mb-0" id="about-me-container"></p>
-        </div>
-      </section>
-      <hr class="hr-dark">
-
-      <section class="mb-4">
-        <div class="section-heading section-heading-right toggle-header">
-          <div class="section-heading-left-group">
-            <span class="icon-circle"><i class="bi bi-briefcase-fill"></i></span>
-            <h5 class="heading-text">JOB EXPERIENCE</h5>
-          </div>
-          <i class="bi bi-chevron-down toggle-arrow"></i>
-        </div>
-
-        <div class="toggle-content is-hidden">
-          <div id="experience-container"></div>
-        </div>
-      </section>
-      <hr class="hr-dark">
-
-      <section class="skills-section mt-4">
-        <div class="section-heading section-heading-right toggle-header">
-          <div class="section-heading-left-group">
-            <span class="icon-circle"><i class="bi bi-pie-chart-fill"></i></span>
-            <h5 class="heading-text">SKILLS</h5>
-          </div>
-          <i class="bi bi-chevron-down toggle-arrow"></i>
-        </div>
-
-        <div class="toggle-content is-hidden">
-          <div class="skills-grid" id="skills-container"></div>
-        </div>
-      </section>
-      <hr class="section-divider">
-
-      <section class="lang-hobby-section mt-4">
-        <div class="row">
-          <div class="col-6">
-            <div class="section-heading section-heading-right mb-3">
-              <span class="icon-circle"><i class="bi bi-globe-americas"></i></span>
-              <h5 class="heading-text">LANGUAGE</h5>
+          <div class="profile-pic-container text-center">
+            <div class="profile-pic">
+              <img [src]="cvData.profile.profilePic"
+                   [alt]="cvData.profile.firstName + ' ' + cvData.profile.lastName + ' profile picture'"
+                   class="img-fluid rounded-circle profile-img">
             </div>
-            <ul class="list-unstyled lang-list" id="language-list"></ul>
           </div>
-          <div class="col-6">
-            <div class="section-heading section-heading-right mb-3">
-              <span class="icon-circle"><i class="bi bi-flag-fill"></i></span>
-              <h5 class="heading-text">HOBBIES</h5>
-            </div>
-            <ul class="list-unstyled hobby-list" id="hobby-list"></ul>
-          </div>
-        </div>
-      </section>
 
-    </main> 
-  </div> 
-</div>
+          <section class="w-100 contact-section">
+            <div class="section-heading section-heading-left mb-3">
+              <span class="icon-circle"><i class="bi bi-telephone-fill"></i></span>
+              <h5 class="heading-text">CONTACT ME</h5>
+            </div>
+            <p class="mb-1 no-wrap"><i class="bi bi-telephone-fill me-2"></i>{{ cvData.contact.phone }}</p>
+            <p class="mb-1 no-wrap"><i class="bi bi-globe me-2"></i>{{ cvData.contact.website }}</p>
+            <p class="mb-2 no-wrap"><i class="bi bi-geo-alt-fill me-2"></i>{{ cvData.contact.address }}</p>
+            <hr class="section-sep">
+          </section>
+
+          <section class="w-100 education-section">
+            <div class="section-heading section-heading-left mb-3">
+              <span class="icon-circle"><i class="bi bi-mortarboard-fill"></i></span>
+              <h5 class="heading-text">EDUCATION</h5>
+            </div>
+            @for (item of cvData.education; track item.university) {
+              <div>
+                <p class="fw-bold mb-0">{{ item.university }}</p>
+                <p class="small text-muted mb-1">{{ item.degree }}</p>
+                <p class="small text-muted mb-2">{{ item.years }}</p>
+              </div>
+            }
+            <hr class="section-sep">
+          </section>
+
+          <section class="w-100 references-section">
+            <div class="section-heading section-heading-left mb-3">
+              <span class="icon-circle"><i class="bi bi-people-fill"></i></span>
+              <h5 class="heading-text">REFERENCES</h5>
+            </div>
+            @for (item of cvData.references; track item.name) {
+              <div>
+                <p class="fw-bold mb-0">{{ item.name }}</p>
+                @for (line of item.lines; track line) {
+                  <p class="small text-muted mb-0 no-wrap">{{ line }}</p>
+                }
+                <br>
+              </div>
+            }
+          </section>
+
+        </div>
+      </aside>
+
+      <main class="col-md-7 right-column bg-white p-5">
+
+        <!-- ABOUT ME -->
+        <section class="mb-4">
+          <div class="section-heading section-heading-right toggle-header" (click)="toggleSection('about')">
+            <div class="section-heading-left-group">
+              <span class="icon-circle"><i class="bi bi-person-circle"></i></span>
+              <h5 class="heading-text">ABOUT ME</h5>
+            </div>
+            <i class="bi bi-chevron-down toggle-arrow" [class.is-rotated]="sectionsOpen['about']"></i>
+          </div>
+          <div class="toggle-content" [class.is-hidden]="!sectionsOpen['about']">
+            <p class="right-text mb-0">{{ cvData.profile.about }}</p>
+          </div>
+        </section>
+        <hr class="hr-dark">
+
+        <!-- JOB EXPERIENCE -->
+        <section class="mb-4">
+          <div class="section-heading section-heading-right toggle-header" (click)="toggleSection('experience')">
+            <div class="section-heading-left-group">
+              <span class="icon-circle"><i class="bi bi-briefcase-fill"></i></span>
+              <h5 class="heading-text">JOB EXPERIENCE</h5>
+            </div>
+            <i class="bi bi-chevron-down toggle-arrow" [class.is-rotated]="sectionsOpen['experience']"></i>
+          </div>
+          <div class="toggle-content" [class.is-hidden]="!sectionsOpen['experience']">
+            @for (job of cvData.experience; track job.title; let last = $last) {
+              <div class="job-item" [class.mb-3]="!last">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h6 class="job-title fw-bold text-uppercase mb-1">{{ job.title }}</h6>
+                    <p class="job-company fst-italic text-muted mb-2">{{ job.company }}</p>
+                  </div>
+                  <div class="job-years text-divider-dark-color">{{ job.years }}</div>
+                </div>
+                <p class="right-text mb-0">{{ job.description }}</p>
+              </div>
+            }
+          </div>
+        </section>
+        <hr class="hr-dark">
+
+        <!-- SKILLS -->
+        <section class="skills-section mt-4">
+          <div class="section-heading section-heading-right toggle-header" (click)="toggleSection('skills')">
+            <div class="section-heading-left-group">
+              <span class="icon-circle"><i class="bi bi-pie-chart-fill"></i></span>
+              <h5 class="heading-text">SKILLS</h5>
+            </div>
+            <i class="bi bi-chevron-down toggle-arrow" [class.is-rotated]="sectionsOpen['skills']"></i>
+          </div>
+          <div class="toggle-content" [class.is-hidden]="!sectionsOpen['skills']">
+            <div class="skills-grid">
+              @for (skill of cvData.skills; track skill.name) {
+                <div class="skill-item">
+                  <p class="skill-label">{{ skill.name }}</p>
+                  <div class="skill-line">
+                    <div class="skill-fill" [style.width.%]="skill.level"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </section>
+        <hr class="section-divider">
+
+        <!-- LANGUAGE & HOBBIES -->
+        <section class="lang-hobby-section mt-4">
+          <div class="row">
+            <div class="col-6">
+              <div class="section-heading section-heading-right mb-3">
+                <span class="icon-circle"><i class="bi bi-globe-americas"></i></span>
+                <h5 class="heading-text">LANGUAGE</h5>
+              </div>
+              <ul class="list-unstyled lang-list">
+                @for (lang of cvData.languages; track lang) {
+                  <li><span class="dot">•</span>{{ lang }}</li>
+                }
+              </ul>
+            </div>
+            <div class="col-6">
+              <div class="section-heading section-heading-right mb-3">
+                <span class="icon-circle"><i class="bi bi-flag-fill"></i></span>
+                <h5 class="heading-text">HOBBIES</h5>
+              </div>
+              <ul class="list-unstyled hobby-list">
+                @for (hobby of cvData.hobbies; track hobby) {
+                  <li><span class="dot">•</span>{{ hobby }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+}
