@@ -1,6 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+// НОВЕ: Імпортуємо наші нові компоненти (перевір, чи правильні шляхи, зазвичай вони такі)
+import { LeftColumn } from './components/left-column/left-column';
+import { RightColumn } from './components/right-column/right-column';
 
-interface Profile {
+// НОВЕ: Додав слово "export" до всіх інтерфейсів, щоб ми могли їх використовувати в інших файлах
+export interface Profile {
   firstName: string;
   lastName: string;
   role: string;
@@ -8,36 +12,36 @@ interface Profile {
   about: string;
 }
 
-interface Contact {
+export interface Contact {
   phone: string;
   website: string;
   address: string;
 }
 
-interface EducationItem {
+export interface EducationItem {
   university: string;
   degree: string;
   years: string;
 }
 
-interface ReferenceItem {
+export interface ReferenceItem {
   name: string;
   lines: string[];
 }
 
-interface JobItem {
+export interface JobItem {
   title: string;
   company: string;
   years: string;
   description: string;
 }
 
-interface Skill {
+export interface Skill {
   name: string;
   level: number;
 }
 
-interface CVData {
+export interface CVData {
   profile: Profile;
   contact: Contact;
   education: EducationItem[];
@@ -50,7 +54,9 @@ interface CVData {
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  standalone: true,
+  // НОВЕ: Додаємо компоненти в imports
+  imports: [LeftColumn, RightColumn], 
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -58,6 +64,7 @@ export class App implements OnInit {
   cvData: CVData | null = null;
   errorMessage: string | null = null;
 
+  // Цей стан ми поки залишаємо тут, але згодом перенесемо в праву колонку
   sectionsOpen: { [key: string]: boolean } = {
     about: false,
     experience: false,
@@ -73,7 +80,7 @@ export class App implements OnInit {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       this.cvData = await response.json();
-      this.cdr.detectChanges(); // <- це вирішить проблему
+      this.cdr.detectChanges(); 
     } catch (error) {
       console.error('Could not load CV data:', error);
       this.errorMessage = 'Не вдалося завантажити дані резюме.';

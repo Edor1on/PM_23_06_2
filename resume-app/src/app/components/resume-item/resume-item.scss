@@ -1,0 +1,20 @@
+@use '../../../scss/variables' as *;
+
+.job-item {
+  .job-company {
+    color: $dark;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .job-years {
+    color: $divider-dark-color;
+    font-size: 0.95rem;
+  }
+}
+
+// Додамо сюди right-text, бо опис роботи використовує цей клас
+.right-text {
+  color: $muted;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
