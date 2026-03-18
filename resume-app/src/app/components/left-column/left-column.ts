@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CVData } from '../../app'; 
 
 // 1. ІМПОРТУЄМО НАШІ НОВІ КОМПОНЕНТИ
@@ -12,7 +12,8 @@ import { ResumeItem } from '../resume-item/resume-item';
   // 2. ДОДАЄМО ЇХ В МАСИВ IMPORTS
   imports: [SectionHeading, InfoList, ResumeItem], 
   templateUrl: './left-column.html',
-  styleUrl: './left-column.scss'
+  styleUrl: './left-column.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class LeftColumn {
   @Input({ required: true }) cvData!: CVData; 

@@ -1,45 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// НОВЕ: Імпортуємо наші нові компоненти (перевір, чи правильні шляхи, зазвичай вони такі)
+import { Component, OnInit } from '@angular/core';
 import { LeftColumn } from './components/left-column/left-column';
 import { RightColumn } from './components/right-column/right-column';
+import { ResumeService } from './services/resume'; // Наш сервіс
+import { CommonModule } from '@angular/common'; // Додав для роботи @if/@else
+import { FormsModule } from '@angular/forms'; // Додаємо цей імпорт
 
-// НОВЕ: Додав слово "export" до всіх інтерфейсів, щоб ми могли їх використовувати в інших файлах
-export interface Profile {
-  firstName: string;
-  lastName: string;
-  role: string;
-  profilePic: string;
-  about: string;
-}
-
-export interface Contact {
-  phone: string;
-  website: string;
-  address: string;
-}
-
-export interface EducationItem {
-  university: string;
-  degree: string;
-  years: string;
-}
-
-export interface ReferenceItem {
-  name: string;
-  lines: string[];
-}
-
-export interface JobItem {
-  title: string;
-  company: string;
-  years: string;
-  description: string;
-}
-
-export interface Skill {
-  name: string;
-  level: number;
-}
+// Інтерфейси залишаємо (хоча їх краще винести в окремий файл cv-data.model.ts, але для лаби ок)
+export interface Profile { firstName: string; lastName: string; role: string; profilePic: string; about: string; }
+export interface Contact { phone: string; website: string; address: string; }
+export interface EducationItem { university: string; degree: string; years: string; }
+export interface ReferenceItem { name: string; lines: string[]; }
+export interface JobItem { title: string; company: string; years: string; description: string; }
+export interface Skill { name: string; level: number; }
 
 export interface CVData {
   profile: Profile;
@@ -55,40 +27,47 @@ export interface CVData {
 @Component({
   selector: 'app-root',
   standalone: true,
-  // НОВЕ: Додаємо компоненти в imports
-  imports: [LeftColumn, RightColumn], 
+  // Додаємо FormsModule сюди, щоб запрацював [(ngModel)]
+  imports: [LeftColumn, RightColumn, CommonModule, FormsModule], 
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
+
+
 export class App implements OnInit {
   cvData: CVData | null = null;
   errorMessage: string | null = null;
 
-  // Цей стан ми поки залишаємо тут, але згодом перенесемо в праву колонку
-  sectionsOpen: { [key: string]: boolean } = {
-    about: false,
-    experience: false,
-    skills: false,
-  };
+  // Інжектуємо сервіс через конструктор
+  constructor(private resumeService: ResumeService) {}
 
-  constructor(private cdr: ChangeDetectorRef) {}
-
-  async ngOnInit(): Promise<void> {
-    try {
-      const response = await fetch('data/data.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      this.cvData = await response.json();
-      this.cdr.detectChanges(); 
-    } catch (error) {
-      console.error('Could not load CV data:', error);
-      this.errorMessage = 'Не вдалося завантажити дані резюме.';
-      this.cdr.detectChanges();
-    }
+  ngOnInit(): void {
+    this.loadData();
   }
 
-  toggleSection(section: string): void {
-    this.sectionsOpen[section] = !this.sectionsOpen[section];
+  // Завдання 3: Виконання GET-запиту через сервіс
+  loadData(): void {
+    this.resumeService.getResumeData().subscribe({
+      next: (data) => {
+        this.cvData = data;
+        this.errorMessage = null;
+      },
+      error: (err) => {
+        console.error('Помилка завантаження:', err);
+        // Завдання 5: Обробка помилок
+        this.errorMessage = 'Помилка: не вдалося зєднатися з сервером (Node.js). Перевірте консоль.';
+      }
+    });
+  }
+
+  // Метод для Завдання 4: Реалізація POST-запиту
+  // Наприклад, додамо метод, який зможе "оновити" дані на сервері
+  saveChanges(): void {
+    if (this.cvData) {
+      this.resumeService.updateResumeData(this.cvData).subscribe({
+        next: (response) => alert(response.message),
+        error: (err) => this.errorMessage = 'Не вдалося зберегти зміни.'
+      });
+    }
   }
 }

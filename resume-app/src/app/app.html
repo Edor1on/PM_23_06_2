@@ -1,21 +1,37 @@
-@if (errorMessage) {
-  <div class="alert alert-danger m-3">{{ errorMessage }}</div>
-}
-
 @if (cvData) {
-  <div class="resume container shadow-lg my-5">
-    <div class="row g-0 position-relative">
-
-      <div class="vertical-divider position-absolute top-0 bottom-0"></div>
-
-      <aside class="col-md-5 left-column d-flex flex-column">
-        <app-left-column [cvData]="cvData"></app-left-column>
-      </aside>
-
-      <main class="col-md-7 right-column bg-white p-5">
-        <app-right-column [cvData]="cvData"></app-right-column>
-      </main>
-
+  <div class="admin-panel p-2 border-bottom bg-light shadow-sm mb-4">
+    <div class="container d-flex align-items-center justify-content-center gap-2">
+      <label class="mb-0">Змінити професію:</label>
+      <input [(ngModel)]="cvData.profile.role" class="form-control form-control-sm w-auto">
+      <button (click)="saveChanges()" class="btn btn-sm btn-success">
+        <i class="bi bi-cloud-upload"></i> Зберегти
+      </button>
     </div>
+  </div>
+
+  <main class="resume-container resume shadow-lg">
+    <div class="vertical-divider"></div>
+
+    <app-left-column 
+      [cvData]="cvData" 
+      class="left-column">
+    </app-left-column>
+
+    <app-right-column 
+      [cvData]="cvData" 
+      class="right-column">
+    </app-right-column>
+  </main>
+
+} @else if (errorMessage) {
+  <div class="error-container p-5 text-center">
+    <h3 class="text-danger">Упс! Щось пішло не так</h3>
+    <p>{{ errorMessage }}</p>
+    <button (click)="loadData()" class="btn btn-primary">Спробувати знову</button>
+  </div>
+} @else {
+  <div class="loader-container p-5 text-center">
+    <div class="spinner-border text-primary"></div>
+    <p>Завантаження даних із сервера...</p>
   </div>
 }
