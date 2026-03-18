@@ -1,10 +1,14 @@
-<div class="job-item" [class.mb-3]="!isLast" (click)="onClick()" style="cursor: pointer; transition: 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-  <div class="d-flex justify-content-between align-items-start">
-    <div>
-      <h6 class="job-title fw-bold text-uppercase mb-1">{{ job.title }}</h6>
-      <p class="job-company fst-italic text-muted mb-2">{{ job.company }}</p>
-    </div>
-    <div class="job-years text-divider-dark-color">{{ job.years }}</div>
+<div class="job-item" (click)="onClick()">
+  <div class="d-flex justify-content-between align-items-baseline">
+    <h6 class="job-title text-uppercase fw-bold mb-1">{{ title }}</h6>
+    <span class="job-years">{{ date }}</span>
   </div>
-  <p class="right-text mb-0">{{ job.description }}</p>
+  <p class="job-company">{{ subtitle }}</p>
+  
+  @if (description) {
+    <p class="job-desc text-muted small">{{ description }}</p>
+  }
 </div>
+@if (!isLast) {
+  <br>
+}

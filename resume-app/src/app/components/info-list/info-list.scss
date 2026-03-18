@@ -1,0 +1,32 @@
+@use '../../../scss/variables' as *;
+
+:host {
+  display: block;
+}
+
+.custom-info-list {
+  padding-left: 0;
+  margin-bottom: 0;
+  display: grid; 
+  grid-template-columns: 1fr; /* За замовчуванням 1 стовпчик (для Хобі) */
+  row-gap: 8px; /* Відступ між рядками вниз */
+
+  /* Коли ми передаємо прапорець twoColumns, вмикається цей клас */
+  &.two-columns {
+    grid-template-columns: 1fr 1fr; /* Робить рівно 2 стовпчики (для Мов) */
+    column-gap: 15px; /* Відступ між стовпчиками */
+  }
+
+  li {
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0; 
+    
+    i {
+      margin-right: 10px;
+      color: $accent;
+    }
+  }
+}

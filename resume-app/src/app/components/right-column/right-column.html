@@ -30,7 +30,10 @@
 
     @for (job of cvData.experience; track job.title; let last = $last) {
       <app-resume-item 
-        [job]="job" 
+        [title]="job.title"
+        [subtitle]="job.company"
+        [date]="job.years"
+        [description]="job.description"
         [isLast]="last" 
         (itemClicked)="handleJobClick($event)">
       </app-resume-item>
@@ -51,12 +54,7 @@
   <div class="toggle-content" [class.is-hidden]="!sectionsOpen['skills']">
     <div class="skills-grid">
       @for (skill of cvData.skills; track skill.name) {
-        <div class="skill-item">
-          <p class="skill-label">{{ skill.name }}</p>
-          <div class="skill-line">
-            <div class="skill-fill" [style.width.%]="skill.level"></div>
-          </div>
-        </div>
+        <app-skill-item [name]="skill.name" [level]="skill.level"></app-skill-item>
       }
     </div>
   </div>
@@ -65,27 +63,13 @@
 
 <section class="lang-hobby-section mt-4">
   <div class="row">
-    <div class="col-6">
-      <div class="section-heading section-heading-right mb-3">
-        <span class="icon-circle"><i class="bi bi-globe-americas"></i></span>
-        <h5 class="heading-text">LANGUAGE</h5>
-      </div>
-      <ul class="list-unstyled lang-list">
-        @for (lang of cvData.languages; track lang) {
-          <li><span class="dot">•</span>{{ lang }}</li>
-        }
-      </ul>
+    <div class="col-6 lang-grid-wrapper">
+      <app-section-heading title="LANGUAGE" iconClass="bi-globe-americas"></app-section-heading>
+      <app-info-list [items]="cvData.languages"></app-info-list>
     </div>
     <div class="col-6">
-      <div class="section-heading section-heading-right mb-3">
-        <span class="icon-circle"><i class="bi bi-flag-fill"></i></span>
-        <h5 class="heading-text">HOBBIES</h5>
-      </div>
-      <ul class="list-unstyled hobby-list">
-        @for (hobby of cvData.hobbies; track hobby) {
-          <li><span class="dot">•</span>{{ hobby }}</li>
-        }
-      </ul>
+      <app-section-heading title="HOBBIES" iconClass="bi-flag-fill"></app-section-heading>
+      <app-info-list [items]="cvData.hobbies"></app-info-list>
     </div>
   </div>
 </section>

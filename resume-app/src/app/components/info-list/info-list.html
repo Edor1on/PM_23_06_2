@@ -1,0 +1,8 @@
+<ul class="list-unstyled custom-info-list" [class.two-columns]="twoColumns">
+  @for (item of items; track item) {
+    <li>
+      <i class="bi text-accent" [class]="iconClass"></i>
+      {{ item }}
+    </li>
+  }
+</ul>

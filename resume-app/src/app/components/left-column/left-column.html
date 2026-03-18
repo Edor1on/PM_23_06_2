@@ -7,17 +7,13 @@
 
   <div class="profile-pic-container text-center">
     <div class="profile-pic">
-      <img [src]="cvData.profile.profilePic"
-           [alt]="cvData.profile.firstName + ' ' + cvData.profile.lastName + ' profile picture'"
-           class="img-fluid rounded-circle profile-img">
+      <img [src]="cvData.profile.profilePic" [alt]="cvData.profile.firstName + ' profile picture'">
     </div>
   </div>
 
   <section class="w-100 contact-section">
-    <div class="section-heading section-heading-left mb-3">
-      <span class="icon-circle"><i class="bi bi-telephone-fill"></i></span>
-      <h5 class="heading-text">CONTACT ME</h5>
-    </div>
+    <app-section-heading title="CONTACT ME" iconClass="bi-telephone-fill" [centered]="true"></app-section-heading>
+    
     <p class="mb-1 no-wrap"><i class="bi bi-telephone-fill me-2"></i>{{ cvData.contact.phone }}</p>
     <p class="mb-1 no-wrap"><i class="bi bi-globe me-2"></i>{{ cvData.contact.website }}</p>
     <p class="mb-2 no-wrap"><i class="bi bi-geo-alt-fill me-2"></i>{{ cvData.contact.address }}</p>
@@ -25,10 +21,8 @@
   </section>
 
   <section class="w-100 education-section">
-    <div class="section-heading section-heading-left mb-3">
-      <span class="icon-circle"><i class="bi bi-mortarboard-fill"></i></span>
-      <h5 class="heading-text">EDUCATION</h5>
-    </div>
+    <app-section-heading title="EDUCATION" iconClass="bi-mortarboard-fill" [centered]="true"></app-section-heading>
+    
     @for (item of cvData.education; track item.university) {
       <div>
         <p class="fw-bold mb-0">{{ item.university }}</p>
@@ -40,10 +34,8 @@
   </section>
 
   <section class="w-100 references-section">
-    <div class="section-heading section-heading-left mb-3">
-      <span class="icon-circle"><i class="bi bi-people-fill"></i></span>
-      <h5 class="heading-text">REFERENCES</h5>
-    </div>
+    <app-section-heading title="REFERENCES" iconClass="bi-people-fill" [centered]="true"></app-section-heading>
+    
     @for (item of cvData.references; track item.name) {
       <div>
         <p class="fw-bold mb-0">{{ item.name }}</p>
