@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { LeftColumn } from './components/left-column/left-column';
 import { RightColumn } from './components/right-column/right-column';
-import { ResumeService } from './services/resume'; // Наш сервіс
-import { CommonModule } from '@angular/common'; // Додав для роботи @if/@else
-import { FormsModule } from '@angular/forms'; // Додаємо цей імпорт
+import { ResumeService } from './services/resume'; 
+import { CommonModule } from '@angular/common'; 
+// ДОДАЄМО ReactiveFormsModule ДЛЯ 2-Ї ФОРМИ:
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 
-// Інтерфейси залишаємо (хоча їх краще винести в окремий файл cv-data.model.ts, але для лаби ок)
+// ІМПОРТУЄМО НАШІ НОВІ КОМПОНЕНТИ ФОРМ:
+import { ContactFormComponent } from './components/contact-form/contact-form';
+import { SkillFormComponent } from './components/skill-form/skill-form';
+
 export interface Profile { firstName: string; lastName: string; role: string; profilePic: string; about: string; }
 export interface Contact { phone: string; website: string; address: string; }
 export interface EducationItem { university: string; degree: string; years: string; }
@@ -27,25 +31,29 @@ export interface CVData {
 @Component({
   selector: 'app-root',
   standalone: true,
-  // Додаємо FormsModule сюди, щоб запрацював [(ngModel)]
-  imports: [LeftColumn, RightColumn, CommonModule, FormsModule], 
+  // ДОДАЄМО ФОРМИ В IMPORTS:
+  imports: [
+    LeftColumn, 
+    RightColumn, 
+    CommonModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    ContactFormComponent, 
+    SkillFormComponent
+  ], 
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-
-
 export class App implements OnInit {
   cvData: CVData | null = null;
   errorMessage: string | null = null;
 
-  // Інжектуємо сервіс через конструктор
   constructor(private resumeService: ResumeService) {}
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  // Завдання 3: Виконання GET-запиту через сервіс
   loadData(): void {
     this.resumeService.getResumeData().subscribe({
       next: (data) => {
@@ -54,14 +62,13 @@ export class App implements OnInit {
       },
       error: (err) => {
         console.error('Помилка завантаження:', err);
-        // Завдання 5: Обробка помилок
         this.errorMessage = 'Помилка: не вдалося зєднатися з сервером (Node.js). Перевірте консоль.';
       }
     });
   }
 
-  // Метод для Завдання 4: Реалізація POST-запиту
-  // Наприклад, додамо метод, який зможе "оновити" дані на сервері
+  // ... (початок файлу залишається без змін) ...
+
   saveChanges(): void {
     if (this.cvData) {
       this.resumeService.updateResumeData(this.cvData).subscribe({
@@ -70,4 +77,15 @@ export class App implements OnInit {
       });
     }
   }
+
+  // ==========================================
+  // ДОДАЄМО ЦЕЙ МЕТОД СЮДИ:
+  // ==========================================
+  onSkillAdded(newSkill: {name: string, level: number}): void {
+    if (this.cvData) {
+      this.cvData.skills.push(newSkill); // Додаємо нову навичку в масив
+      this.saveChanges(); // Одразу зберігаємо зміни на сервері!
+    }
+  }
+
 }

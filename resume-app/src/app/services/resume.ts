@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-// Важливо: перевір шлях до інтерфейсу CVData. 
-// Якщо він у app.ts, то імпортуй звідти:
 import { CVData } from '../app'; 
 
 @Injectable({

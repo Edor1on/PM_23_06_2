@@ -1,0 +1,43 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h4 class="card-title text-primary mb-3"><i class="bi bi-star"></i> Додати навичку</h4>
+
+    @if (!submitted) {
+      <form [formGroup]="skillForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3">
+          <label for="skillName" class="form-label">Назва навички *</label>
+          <input type="text" class="form-control" id="skillName" formControlName="name">
+          
+          @if (name?.invalid && (name?.dirty || name?.touched)) {
+            <div class="text-danger small mt-1">
+              @if (name?.errors?.['required']) { <span>Назва обов'язкова.</span> }
+              @if (name?.errors?.['minlength']) { <span>Мінімум 2 символи.</span> }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="skillLevel" class="form-label">Рівень (1-100) *</label>
+          <input type="number" class="form-control" id="skillLevel" formControlName="level">
+          
+          @if (level?.invalid && (level?.dirty || level?.touched)) {
+            <div class="text-danger small mt-1">
+              @if (level?.errors?.['required']) { <span>Рівень обов'язковий.</span> }
+              @if (level?.errors?.['min'] || level?.errors?.['max']) { <span>Введіть число від 1 до 100.</span> }
+            </div>
+          }
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="skillForm.invalid">
+          Додати
+        </button>
+      </form>
+    } @else {
+      <div class="alert alert-primary">
+        Навичку "{{ skillForm.value.name }}" з рівнем {{ skillForm.value.level }} успішно додано!
+      </div>
+      <button class="btn btn-outline-secondary btn-sm" (click)="submitted = false; skillForm.reset()">Додати ще</button>
+    }
+  </div>
+</div>
