@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CVData } from '../app'; 
+import { CVData } from '../pages/resume-page/resume-page';
 
 @Injectable({
   providedIn: 'root'

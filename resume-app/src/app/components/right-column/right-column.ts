@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CVData } from '../../app';
+import { CVData } from '../../pages/resume-page/resume-page';
 import { ResumeItem } from '../resume-item/resume-item';
 // ДОДАЄМО НАШІ НОВІ КОМПОНЕНТИ
 import { SectionHeading } from '../section-heading/section-heading';

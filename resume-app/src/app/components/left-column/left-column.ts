@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { CVData } from '../../app'; 
+import { CVData } from '../../pages/resume-page/resume-page';
 
 // 1. ІМПОРТУЄМО НАШІ НОВІ КОМПОНЕНТИ
 import { SectionHeading } from '../section-heading/section-heading';
