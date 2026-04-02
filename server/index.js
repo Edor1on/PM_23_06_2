@@ -8,8 +8,8 @@ const PORT = 3000;
 const dataPath = path.join(__dirname, 'data.json');
 
 // Middleware
-app.use(cors()); // Дозволяємо Angular робити запити сюди
-app.use(express.json()); // Вчимо сервер розуміти формат JSON при POST-запитах
+app.use(cors()); 
+app.use(express.json()); 
 
 // GET-запит (Завдання 1: зчитування даних)
 app.get('/api/resume', (req, res) => {
@@ -18,22 +18,46 @@ app.get('/api/resume', (req, res) => {
             console.error(err);
             return res.status(500).json({ message: 'Помилка читання файлу на сервері' });
         }
-        // Відправляємо дані клієнту
         res.json(JSON.parse(data));
     });
 });
 
 // POST-запит (Завдання 1: записування даних)
 app.post('/api/resume', (req, res) => {
-    const newData = req.body; // Те, що прилетить з Angular
+    const newData = req.body; 
     
-    // Записуємо оновлені дані назад у файл (форматуємо гарно з відступами '2')
     fs.writeFile(dataPath, JSON.stringify(newData, null, 2), (err) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ message: 'Помилка запису у файл на сервері' });
         }
         res.json({ message: 'Дані резюме успішно оновлено на сервері!' });
+    });
+});
+
+// ==========================================
+// НОВИЙ POST-ЗАПИТ ДЛЯ ЛОГІНУ (Авторизація)
+// ==========================================
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body; 
+
+    fs.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Помилка сервера' });
+        }
+
+        const parsedData = JSON.parse(data);
+        const users = parsedData.users || [];
+
+        // Перевіряємо логін і пароль
+        const userExists = users.find(u => u.username === username && u.password === password);
+
+        if (userExists) {
+            res.json({ success: true, message: 'Успішний вхід' });
+        } else {
+            res.status(401).json({ success: false, message: 'Невірний логін або пароль' });
+        }
     });
 });
 

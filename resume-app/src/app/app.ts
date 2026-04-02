@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; // Підключаємо роутер
+import { RouterModule, Router } from '@angular/router'; 
+import { AuthService } from './services/auth'; // Шлях до твого сервісу
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule], // Тільки RouterModule!
+  imports: [RouterModule], 
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  // Тут більше нічого немає, вся логіка пішла в resume-page
+  constructor(public authService: AuthService, private router: Router) {}
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

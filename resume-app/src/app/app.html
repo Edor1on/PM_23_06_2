@@ -2,13 +2,20 @@
   <div class="container">
     <a class="navbar-brand" href="#">MyResumeApp</a>
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-auto">
+<ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/resume" routerLinkActive="active">Резюме</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active">Вхід</a>
-        </li>
+        @if (!authService.isAuthenticated()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">Вхід</a>
+          </li>
+        }
+        @if (authService.isAuthenticated()) {
+          <li class="nav-item">
+            <a class="nav-link fw-bold" style="cursor: pointer;" (click)="onLogout()">Вихід</a>
+          </li>
+        }
       </ul>
     </div>
   </div>
